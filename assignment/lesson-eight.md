@@ -1,85 +1,116 @@
-# 📘 Lesson 8 — Clustering (Unsupervised Learning)
+# 🎓 Assignment – Spending Pattern Analysis with K-Means (Clustering)
 
-**Due:** **Tue, Feb 26, 2025 — 12:00 PM (Africa/Mogadishu / EAT)**
+**Due:** **Thursday, Feb 26, 2025 — 12:00 PM (Africa/Mogadishu / EAT)**
 
-**Goal:** Understand the key concepts, algorithms, and evaluation metrics of **Clustering** in Machine Learning.
+## **Part A – Practical (Jupyter Notebook)**
 
----
-
-## 📋 Assignment Questions
-
-Write your work in **English** using a clear academic style (headings, paragraphs, and references).
-Length: **2–3 pages**. Use **your own words** — no copy-paste.
+**Objective:**
+Implement **customer spending segmentation** using **K-Means** on `Income_$` and `SpendingScore`. Evaluate multiple values of **k**, choose the best based on printed metrics, and label the dataset.
 
 ---
 
-### **1. Introduction to Clustering**
+### **Instructions**
 
-* What is **clustering** in Machine Learning?
-* How is it **different from supervised learning** (regression/classification)?
-* Give **one real-life example** of clustering and one of supervised learning.
+1. **Notebook Setup**
 
----
+   * Create a Jupyter Notebook named:
+     `spending_clustering.ipynb`.
 
-### **2. Clustering Algorithms**
+2. **Load Dataset**
 
-* Describe the following algorithms:
+   * Use the provided dataset: `dataset/spending_l9_dataset.csv`.
 
-  * **K-Means**
-  * **Hierarchical Clustering**
-  * **DBSCAN**
+3. **Prepare Features**
 
-* For each algorithm, explain:
+   * Features (`X`) = `["Income_$", "SpendingScore"]`.
+   * Handle any missing values via **median** (numeric only).
+   * Scale features with `StandardScaler`.
 
-  * How it works (basic idea)
-  * One real-world use case
-  * Main advantages and limitations
+4. **Elbow Check (SSE)**
 
----
+   * Loop `k = 1..10`, fit KMeans, **print**:
+     `k=… → SSE=…` (no plots).
 
-### **3. Clustering Metrics**
+5. **Model Training (Pick K)**
 
-* Define and explain what each of these metrics measures:
+   * Choose a reasonable **K** (e.g., 2–5) based on your SSE trend.
+   * Fit final `KMeans(n_clusters=K, random_state=42)` and get labels.
+   * Add `Cluster` column to the DataFrame.
 
-  * **Elbow Method**
-  * **Silhouette Score**
-  * **Davies–Bouldin Index**
+6. **Evaluate Clustering**
 
-* Add a **comparison table** showing:
+   * Compute and print:
 
-  * What each metric measures
-  * What a “good” value means
-  * When the metric is most useful
+     * **Silhouette Score** (higher → better separation)
+     * **Davies–Bouldin Index (DBI)** (lower → better separation)
 
----
+7. **Cluster Centers (Original Units)**
 
-### **4. Challenges in Clustering**
+   * Inverse-transform the cluster centers back to original units.
+   * Print a small table of **centers for each cluster** (rounded).
 
-* Why is clustering considered harder than supervised learning?
-* Explain at least **two common challenges** in clustering, such as:
+8. **Sanity Check**
 
-  * Choosing the right number of clusters (`k`).
-  * Handling noise and outliers.
-  * Dealing with high-dimensional data.
+   * Print **three sample rows** (any indices) with `Income_$`, `SpendingScore`, and `Cluster`.
 
----
+9. **Save Output**
 
-### **5. Real-World Case Study**
-
-* Research a **real-world project or study** that used clustering (e.g., customer segmentation, image segmentation, genetics, social networks).
-* Summarize:
-
-  * The goal of the project
-  * The data they used
-  * The clustering model applied
-  * The key results or insights
+   * Save the labeled file as: `spending_labeled_clusters.csv`.
 
 ---
 
-## 📤 What to Submit
+### **Expected Output**
 
-Submit your written assignment as:
+* Printed **SSE** for `k = 1..10` (Elbow check).
+* Printed **Silhouette** and **DBI** for your chosen `K`. Example:
 
-* `clustering_paper.md` (recommended), or `.pdf` / `.docx`.
+  ```
+  Silhouette Score : 0.642
+  Davies–Bouldin   : 0.512
+  ```
+* Printed **cluster centers** in original units, e.g.:
+
+  ```
+  === CLUSTER CENTERS (Original Units) ===
+           Income_$  SpendingScore
+  Cluster
+  0           28.75          82.10
+  1           56.30          52.40
+  2           92.20          21.15
+  ```
+* **Sanity check** table with three customers and their assigned clusters.
+* Saved file: `spending_labeled_clusters.csv`.
+
+---
+
+## **Part B – Reflection Paper**
+
+Write **1–2 pages** (Markdown or PDF) answering:
+
+1. **What did you implement?**
+   Briefly describe your K-Means workflow (scaling, SSE loop, metrics, labeling).
+
+2. **Choosing K:**
+
+   * Which **K** did you pick and **why**?
+   * Refer to **SSE**, **Silhouette**, and **DBI** you printed.
+
+3. **Cluster Interpretation:**
+
+   * Describe each cluster in plain language (e.g., **Low Income / High Spending**).
+   * Suggest **one business action** per cluster (e.g., loyalty offer, upsell, retention).
+
+4. **Limitations & Next Steps:**
+
+   * What information might improve segmentation (e.g., **Age**, **Visits**, **OnlinePurchases**)?
+   * One concrete next step (try 3 features, try DBSCAN, etc.).
+
+---
+
+### **Submission Format**
+
+* `spending_clustering.ipynb` (all code + printed outputs)
+* `spending_labeled_clusters.csv`
+* `spending_reflection.md` **or** `spending_reflection.pdf`
 
 ---
